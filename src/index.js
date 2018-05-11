@@ -36,8 +36,12 @@ class CodexMysterium extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-        <span style={{ fontFamily: 'Voynich123'}}>ok</span>
-        <span style={{ fontFamily: 'RunaSansMedium'}}>ok</span>
+        <ul>
+          <li>Load images</li>
+          <li>Build chapters</li>
+          <li>Display chapters</li>
+          <li>Editor</li>
+        </ul>
       </React.Fragment>
 		)
 	}
