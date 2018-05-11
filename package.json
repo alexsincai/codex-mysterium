@@ -1,0 +1,30 @@
+{
+  "name": "codex-mysterium",
+  "version": "1.0.0",
+  "description": "JS sort-of port of Liza Daly's Seraphs",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-scripts": "^1.1.4",
+    "reset-css": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexsincai/codex-mysterium.git"
+  },
+  "author": "Alex Sincai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexsincai/codex-mysterium/issues"
+  },
+  "homepage": "https://github.com/alexsincai/codex-mysterium#readme"
+}
