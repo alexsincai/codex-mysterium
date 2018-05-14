@@ -1,2 +1,66 @@
 @import "https://fontlibrary.org/face/voynich";
 @import "https://fontlibrary.org/face/runasans";
+
+@page {
+	margin: 0;
+
+	size: 10in 8in;
+}
+
+@page chapters:left {
+	/* padding: .75in .75in 1in 1.12in; */
+	padding-left: .5in;
+}
+
+@page chapters:right {
+	/* padding: .75in 1.12in 1in .75in; */
+	padding-right: .5in;
+}
+
+body {
+	font-family: "Voynich123";
+	font-size: .2in;
+
+	margin: 0;
+
+	color: sienna;
+
+	page: chapters;
+}
+
+#root {
+	overflow: hidden;
+}
+
+article {
+	position: relative;
+
+	display: block;
+
+	width: 100vw;
+	height: 100vh;
+	padding: .75in .75in 1in;
+
+	page-break-after: always;
+	page-break-inside: avoid;
+}
+
+img {
+	margin: .25in;
+}
+
+.first {
+	font-size: 30pt;
+	line-height: 32pt;
+
+	float: left;
+}
+
+h1 {
+	bookmark-level: 1;
+	bookmark-state: closed;
+}
+
+figcaption {
+	font-size: 12pt;
+}
