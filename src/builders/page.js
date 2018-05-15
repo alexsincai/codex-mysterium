@@ -17,11 +17,9 @@ export default class Page {
 			this._layout = 'landscape1'
 		} else if ( im.width > im.height ) {
 			this._layout = 'landscape2';
-		} else if ( im.width > im.height ) {
+		} else {
 			let opts = [ 'portrait1', 'portrait2', 'portrait3', 'portrait4' ];
 			this._layout = opts[ Math.floor( Math.random() * opts.length ) ];
-		} else {
-			this._layout = 'portrait1';
 		}
 	}
 

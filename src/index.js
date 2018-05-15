@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
+// import * as Vibrant from 'node-vibrant';
+// import colr from 'colr';
+
 import '../node_modules/reset-css/reset.css';
 import './index.css';
 
@@ -19,9 +22,19 @@ class CodexMysterium extends React.Component {
 			sections: [
 				'alchemy',
 				'flowers',
+				'trees',
 				'insects',
-				'architecture'
+				'fish',
+				'bird',
+				'animals',
+				'architecture',
+				'chemistry',
+				'astrology',
+				'astronomy'
 			],
+			script: 'voynich',
+			sectionCount: 11,
+			maxPagesperSection: 15,
 			pages: []
 		};
 
@@ -29,6 +42,18 @@ class CodexMysterium extends React.Component {
 		this.loadImages = this.loadImages.bind( this );
 		this.loadImagesFromFlickr = this.loadImagesFromFlickr.bind( this );
 		this.makePages = this.makePages.bind( this );
+
+		this.edit = {
+			script: ( e ) => this.setState( {
+				script: e.target.value
+			} ),
+			// sectionCount: ( e ) => this.setState( {
+			// 	sectionCount: Number( e.target.value )
+			// }, this.makePages ),
+			sectionCount: ( e ) => {
+
+			}
+		}
 	}
 
 	makePages() {
@@ -39,29 +64,7 @@ class CodexMysterium extends React.Component {
 			let images = this.state.images[ this.state.sections[ s ] ];
 			pages.push( new Page( this.state.sections[ s ], images.pop(), 'folio', words.pop() ) );
 			for ( let p in images ) {
-				let page = new Page( this.state.sections[ s ], images.pop(), null );
-
-				if ( page.layout === 'landscape1' ) {
-					page.words = words.slice( 0, 110 );
-				}
-				if ( page.layout === 'landscape2' ) {
-					page.words = words.slice( 0, 130 );
-				}
-				if ( page.layout === 'portrait1' ) {
-					page.words = words.slice( 0, 170 );
-				}
-				if ( page.layout === 'portrait2' ) {
-					page.words = words.slice( 0, 330 );
-				}
-				if ( page.layout === 'portrait3' ) {
-					page.words = words.slice( 0, 130 );
-				}
-				if ( page.layout === 'portrait4' ) {
-					page.words = words.slice( 0, 130 );
-				}
-
-				words = words.splice( 0, page.words.length );
-
+				let page = new Page( this.state.sections[ s ], images.pop(), null, words.pop() );
 				pages.push( page )
 			}
 		}
@@ -90,7 +93,7 @@ class CodexMysterium extends React.Component {
 				format: 'json',
 				nojsoncallback: 1,
 				extras: 'url_o,url_m',
-				per_page: 5,
+				per_page: this.state.maxPagesperSection,
 				page: page,
 				sort: 'relevance',
 			} ).map( o => o.join( '=' ) ).join( '&' );
@@ -103,11 +106,10 @@ class CodexMysterium extends React.Component {
 		} ) ) ).then( () => {
 			this.setState( {
 				images
-			}, () => {
-
-				localStorage.setItem( 'CodexMysteriumLoadedImages', JSON.stringify( this.state.images ) );
-				this.makePages();
 			} );
+		} ).then( () => {
+			localStorage.setItem( 'CodexMysteriumLoadedImages', JSON.stringify( this.state.images ) );
+			this.makePages();
 		} );
 	}
 
@@ -123,14 +125,17 @@ class CodexMysterium extends React.Component {
 	}
 
 	makeWords() {
-		const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		let words = Array( 1000 ).fill().map( () => {
-			let word = [];
-			let len = Math.floor( Math.random() * 5 ) + 3;
-			while ( len-- ) {
-				word.push( chars[ Math.floor( Math.random() * chars.length ) ] );
-			}
-			return word.join( '' );
+		const chars = 'ABCDEFGHIJKLMNPRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
+		const count = this.state.sections.length * this.state.maxPagesperSection;
+		let words = Array( count ).fill().map( () => {
+			return Array( 330 ).fill().map( () => {
+				let word = [];
+				let len = Math.floor( Math.random() * 5 ) + 3;
+				while ( len-- ) {
+					word.push( chars[ Math.floor( Math.random() * chars.length ) ] );
+				}
+				return word.join( '' );
+			} )
 		} );
 		this.setState( {
 				words
@@ -148,20 +153,39 @@ class CodexMysterium extends React.Component {
 				key: pp,
 				id: `page-${ pp + 1 }`,
 				layout: p.layout,
+				theme: this.state.script,
 				image: p.image,
-				color: p.color,
-				words: p.words
+				words: p.words,
+			}
+		} );
+
+		const index = pages.filter( p => p.layout === 'folio' ).map( p => {
+			return {
+				page: p.key + 1,
+				link: `#${ p.id }`,
+				text: p.words[ 0 ]
 			}
 		} );
 
 		return (
 			<React.Fragment>
-        {/* <pre>
-          <code>{ JSON.stringify( this.state, null, '\t' ) }</code>
-        </pre> */}
         { pages.map( p => (
           <Template { ...p } />
         ) ) }
+        <Template layout="index" theme={ this.state.script } index={ index } />
+        <aside>
+          <label>
+            <span>Script</span>
+            <select value={ this.state.script } onChange={ this.edit.script }>
+              <option value="voynich">Voynich</option>
+              <option value="rune">Runes</option>
+            </select>
+          </label>
+          <label>
+            <span>Sections</span>
+            <input type="range" min="1" max={ this.state.sections.length } defaultValue={ this.state.sectionCount } onChange={ this.edit.sectionCount }/>
+          </label>
+        </aside>
       </React.Fragment>
 		);
 	}

@@ -1,66 +1,233 @@
 @import "https://fontlibrary.org/face/voynich";
 @import "https://fontlibrary.org/face/runasans";
 
-@page {
-	margin: 0;
-
-	size: 10in 8in;
+* {
+	box-sizing: border-box;
 }
 
-@page chapters:left {
-	/* padding: .75in .75in 1in 1.12in; */
-	padding-left: .5in;
-}
-
-@page chapters:right {
-	/* padding: .75in 1.12in 1in .75in; */
-	padding-right: .5in;
-}
-
-body {
+.voynich {
 	font-family: "Voynich123";
-	font-size: .2in;
+}
 
-	margin: 0;
-
-	color: sienna;
-
-	page: chapters;
+.rune {
+	font-family: "RunaSansMedium";
 }
 
 #root {
+	font-size: 1.2em;
+	line-height: 1.5;
+
+	position: relative;
+
 	overflow: hidden;
+}
+
+aside {
+	position: absolute;
+	top: 1em;
+	right: 1em;
+
+	display: flex;
+	flex-direction: column;
+
+	background: #fff;
+}
+
+aside label {
+	padding: 1em;
 }
 
 article {
 	position: relative;
 
+	width: 100vw;
+	height: 70.7106781vh;
+
+	color: sienna;
+
+	page-break-inside: avoid;
+	page-break-after: always;
+}
+
+article > div {
+	position: absolute;
+	top: 5vw;
+	right: 5vw;
+	bottom: 5vw;
+	left: 5vw;
+
+	overflow: hidden;
+
+	/* border: 1px solid; */
+}
+
+article img {
+	position: relative;
+
 	display: block;
 
-	width: 100vw;
-	height: 100vh;
-	padding: .75in .75in 1in;
-
-	page-break-after: always;
-	page-break-inside: avoid;
+	width: 100%;
+	height: auto;
+	margin-right: auto;
+	margin-left: auto;
 }
 
-img {
-	margin: .25in;
+article h1 {
+	font-size: 8em;
 }
 
-.first {
-	font-size: 30pt;
-	line-height: 32pt;
+article p.first::first-letter {
+	font-size: 2em;
 
 	float: left;
+
+	margin-right: .25em;
 }
 
-h1 {
-	bookmark-level: 1;
-	bookmark-state: closed;
+p ~ p {
+	margin-top: 1em;
 }
 
-figcaption {
-	font-size: 12pt;
+/* ***** */
+@media print {
+	@page {
+		margin: 0;
+
+		size: 297mm 210mm;
+	}
+
+	.folio,
+	.landscape1,
+	.landscape2,
+	aside {
+		display: none;
+	}
+
+	article {
+		width: 297mm;
+		height: 209.5mm;
+	}
+
+	article > div {
+		top: 29.7mm;
+		right: 29.7mm;
+		bottom: 29.7mm;
+		left: 29.7mm;
+	}
+}
+/* ***** */
+
+.index {
+	color: #efe5d7;
+	background-color: sienna;
+}
+
+.index a {
+	text-decoration: none;
+
+	color: #efe5d7;
+}
+
+.index ul {
+	position: absolute;
+	bottom: 0;
+
+	width: 100%;
+}
+
+.index li {
+	border-bottom: 1.2px dashed;
+}
+
+.index a:after {
+	position: absolute;
+	right: 0;
+
+	content: attr(data-text);
+}
+
+.folio {
+	color: transparent;
+}
+
+.folio h1 {
+	position: absolute;
+	bottom: 0;
+}
+.folio h1:before,
+.folio h1:after {
+	position: absolute;
+	left: 0;
+
+	content: attr(data-text);
+}
+.folio h1:before {
+	font-weight: bolder;
+
+	color: var(--back);
+}
+.folio h1:after {
+	color: var(--color);
+}
+
+
+.landscape1 img {
+	position: absolute;
+	bottom: 0;
+
+	max-width: 100%;
+	max-height: 76.2mm;
+}
+
+.landscape2 div {
+	height: 123mm;
+}
+
+.landscape2 img {
+	float: right;
+
+	max-width: 63.5mm;
+	margin: 1em;
+	margin-right: 0;
+}
+
+.portrait1  img {
+	float: right;
+
+	max-width: 102mm;
+	max-height: 102mm;
+	margin-right: 0;
+}
+
+.portrait2 div {
+	column-count: 2;
+}
+
+.portrait2 p ~ p {
+	margin-top: 0;
+}
+
+.portrait2 img {
+	max-width: 102mm;
+	max-height: 102mm;
+	margin-bottom: 1em;
+}
+
+.portrait3 div {
+	column-count: 3;
+}
+
+.portrait3 img {
+	/* max-width: 51mm; */
+	/* max-height: 76mm; */
+	float: right;
+}
+
+.portrait4 img {
+	float: left;
+
+	max-width: 100mm;
+	max-height: 110mm;
+	margin: 1em;
+	margin-left: 0;
 }
