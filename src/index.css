@@ -88,6 +88,16 @@ p ~ p {
 	margin-top: 1em;
 }
 
+.grey {
+    filter: saturate(0) contrast(1.2);
+    background-color: #fff !important;
+    color: #000 !important;
+}
+
+.grey h1 {
+    --color: #fff !important;
+}
+
 /* ***** */
 @media print {
 	@page {
@@ -96,9 +106,6 @@ p ~ p {
 		size: 297mm 210mm;
 	}
 
-	.folio,
-	.landscape1,
-	.landscape2,
 	aside {
 		display: none;
 	}

@@ -59,7 +59,7 @@ export default class Tempalte extends React.Component {
 		let articleProps = {
 			'data-must': this.state.mustSet,
 			id: id,
-			className: [ theme, layout ].join( ' ' ),
+			className: [].concat( theme, layout ).reduce( ( a, v ) => a.concat( v ), [] ).join( ' ' ),
 			style: {
 				backgroundColor: this.state.back,
 			}
