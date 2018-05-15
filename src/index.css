@@ -34,7 +34,12 @@ aside {
 }
 
 aside label {
-	padding: 1em;
+	display: grid;
+
+	padding: .25em;
+
+	grid-template-columns: 9fr 11fr;
+	grid-gap: .25em;
 }
 
 article {
@@ -57,8 +62,6 @@ article > div {
 	left: 5vw;
 
 	overflow: hidden;
-
-	/* border: 1px solid; */
 }
 
 article img {
@@ -89,13 +92,18 @@ p ~ p {
 }
 
 .grey {
-    filter: saturate(0) contrast(1.2);
-    background-color: #fff !important;
-    color: #000 !important;
+	color: #000 !important;
+	background-color: #fff !important;
+
+	filter: saturate(0) contrast(1.2);
 }
 
 .grey h1 {
-    --color: #fff !important;
+	--color: #fff !important;
+}
+
+.grey[data-invert="true"] h1 {
+	--color: #000 !important;
 }
 
 /* ***** */
@@ -129,10 +137,19 @@ p ~ p {
 	background-color: sienna;
 }
 
+.index.grey {
+	color: #fff !important;
+	background-color: #333 !important;
+}
+
 .index a {
 	text-decoration: none;
 
 	color: #efe5d7;
+}
+
+.index.grey a {
+	color: #fff !important;
 }
 
 .index ul {

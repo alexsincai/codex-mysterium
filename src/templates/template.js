@@ -57,15 +57,18 @@ export default class Tempalte extends React.Component {
 		} = this.props;
 
 		let articleProps = {
-			'data-must': this.state.mustSet,
 			id: id,
 			className: [].concat( theme, layout ).reduce( ( a, v ) => a.concat( v ), [] ).join( ' ' ),
 			style: {
 				backgroundColor: this.state.back,
 			}
 		};
+
 		if ( this.state.mustInvert ) {
 			articleProps.style.color = this.state.text;
+		}
+		if ( this.state.mustSet ) {
+			articleProps[ 'data-invert' ] = 'true';
 		}
 
 		if ( layout === 'index' ) {

@@ -8,6 +8,7 @@ import './index.css';
 import secret from './secret';
 import Page from './builders/page';
 import Template from './templates/template';
+import Editor from './templates/editor';
 
 const random = ( minIntOrArray, maxInt ) => {
 	if ( minIntOrArray.constructor === Array ) {
@@ -34,16 +35,14 @@ class CodexMysterium extends React.Component {
 				'astrology',
 				'astronomy'
 			],
-			sections: [],
-			images: [],
+			sections: {},
+			sortedList: [],
+			pageCounts: {},
+			images: {},
 			pages: [],
 			maxSections: 3,
 			maxPagesPerSection: 15,
 			script: 'voynich',
-			display: {
-				sectionCount: 0,
-				list: []
-			},
 			forceGreyScale: false
 		};
 
@@ -61,42 +60,50 @@ class CodexMysterium extends React.Component {
 			this.setState( {
 				script: e.target.value
 			} );
-			return;
-		}
-
-		if ( func === 'maxSections' ) {
-			let v = Number( e.target.value );
-			let s = this.state;
-
-			s.maxSections = v;
-			s.display.list = this.state.subjects.slice( 0, v );
-			this.setState( s, () => {
-				this.makePages( this.state.display.list );
-			} )
 		}
 
 		if ( func === 'forceGreyScale' ) {
 			let v = Boolean( e.target.checked );
 			this.setState( {
 				forceGreyScale: v
-			} )
+			} );
+		}
+
+		if ( func === 'maxSections' ) {
+			let v = Number( e.target.value );
+			this.setState( {
+				maxSections: v
+			}, this.makePages );
+		}
+
+		if ( func === 'setSection' ) {
+			let i = Number( e.target.dataset.id );
+			let v = e.target.value;
+			let sortedList = this.state.sortedList;
+			sortedList[ i ] = v;
+			this.setState( {
+				sortedList
+			}, this.makePages );
+		}
+
+		if ( func === 'pageCounts' ) {
+			let i = e.target.dataset.id;
+			let v = Number( e.target.value );
+			let pageCounts = this.state.pageCounts;
+			pageCounts[ i ] = v;
+			this.setState( {
+				pageCounts
+			}, this.makePages );
 		}
 	}
 
 	componentWillMount() {
-		console.log( 'componentWillMount' );
 		this.setState( {
-			// maxSections: this.state.subjects.length,
-			display: {
-				sectionCount: this.state.subjects.length,
-				// list:
-			},
-			sections: Array( this.state.subjects.length ).fill().map( () => [] )
+			sortedList: this.state.subjects.sort( () => Math.random() > 0.5 )
 		}, this.makeWords );
 	}
 
 	makeWords() {
-		console.log( 'makeWords' );
 		const chars = 'ABCDEFGHIJKLMNPRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789'.split( '' );
 		const count = this.state.subjects.length * this.state.maxPagesPerSection;
 		let words = Array( count ).fill().map( () => Array( 330 ).fill().map( () => {
@@ -113,7 +120,6 @@ class CodexMysterium extends React.Component {
 	}
 
 	loadImages() {
-		console.log( 'loadImages' );
 		let loadedImages = localStorage.getItem( 'CodexMysteriumLoadedImages' );
 		if ( loadedImages ) {
 			this.setState( {
@@ -125,7 +131,6 @@ class CodexMysterium extends React.Component {
 	}
 
 	loadImagesFromFlickr( subject = null, page = 1 ) {
-		console.log( 'loadImagesFromFlickr' );
 		let subjects = subject ? [ subject ] : this.state.subjects;
 		let images = {};
 		let searchUrls = [];
@@ -166,32 +171,29 @@ class CodexMysterium extends React.Component {
 	}
 
 	makeSections() {
-		console.log( 'makeSections' );
 		let images = this.state.images;
 		let words = this.state.words;
 		let sections = {};
+		let pageCounts = {};
 		Object.keys( this.state.subjects ).forEach( ( _, i ) => {
 			const b = this.state.subjects[ i ];
-			sections[ b ] = {
-				count: images[ b ].length,
-				pages: [ new Page( this.state.subjects[ i ], images[ b ][ i ], 'folio', words[ i ] ) ]
-			};
+			sections[ b ] = [ new Page( this.state.subjects[ i ], images[ b ][ i ], 'folio', words[ i ] ) ]
 			for ( let j = 1; j < images[ b ].length; j++ ) {
-				sections[ b ].pages.push( new Page( this.state.subjects[ i ], images[ b ][ j ], null, words[ j ] ) )
+				sections[ b ].push( new Page( this.state.subjects[ i ], images[ b ][ j ], null, words[ j ] ) )
 			}
+			pageCounts[ b ] = 5;
 		} );
-
 		this.setState( {
-			sections
+			sections,
+			pageCounts
 		}, this.makePages )
 	}
 
-	makePages( sortedList = null ) {
-		console.log( 'makePages' );
+	makePages( sections = null, counts = null ) {
+		sections = sections || this.state.subjects.slice( 0, this.state.maxSections );
+		counts = counts || this.state.pageCounts;
 
-		let pages = sortedList || this.state.subjects;
-		pages = pages.map( s => this.state.sections[ s ].pages ).reduce( ( a, v ) => a.concat( v ), [] );
-
+		let pages = sections.map( s => this.state.sections[ s ].slice( 0, counts[ s ] ) ).reduce( ( a, v ) => a.concat( v ), [] );
 		this.setState( {
 			pages
 		} );
@@ -226,24 +228,20 @@ class CodexMysterium extends React.Component {
         { pages.map( p => (
           <Template { ...p } />
         ) ) }
-        <Template layout="index" theme={ this.state.script } index={ index } />
-        <aside>
-          <label>
-            <span>Script</span>
-            <select value={ this.state.script } data-func="script" onChange={ this.edit }>
-              <option value="voynich">Voynich</option>
-              <option value="rune">Rune</option>
-            </select>
-          </label>
-          <label>
-            <span>Force greyscale?</span>
-            <input type="checkbox" data-func="forceGreyScale" cheked={ this.state.forceGreyScale } onChange={ this.edit }/>
-          </label>
-          <label>
-            <span>Sections</span>
-            <input type="range" min="1" max={ this.state.subjects.length } data-func="maxSections" defaultValue={ this.state.maxSections } onChange={ this.edit }/>
-          </label>
-        </aside>
+        <Template
+          layout="index"
+          theme={ `${ this.state.script } ${ this.state.forceGreyScale ? 'grey' : '' }` }
+          index={ index }
+        />
+        <Editor
+          script={ this.state.script}
+          edit={ this.edit }
+          greyscale={ this.state.forceGreyScale }
+          subjects={ this.state.subjects }
+          maxSections={ this.state.maxSections }
+          sortedList={ this.state.sortedList }
+          pageCounts={ this.state.pageCounts }
+        />
       </React.Fragment>
 		);
 	}
