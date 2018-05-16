@@ -219,9 +219,10 @@ class CodexMysterium extends React.Component {
 
 		Object.keys( this.state.subjects ).forEach( ( _, i ) => {
 			const b = this.state.subjects[ i ];
-			sections[ b ] = [ new Page( this.state.subjects[ i ], images[ b ][ i ], words[ i ], 'folio' ) ];
+			const pics = images[ b ].sort( () => Math.random() > 0.5 );
+			sections[ b ] = [ new Page( this.state.subjects[ i ], pics[ i ], words[ i ], 'folio' ) ];
 			for ( let j = 1; j < images[ b ].length; j++ ) {
-				sections[ b ].push( new Page( this.state.subjects[ i ], images[ b ][ j ], words[ j ] ) );
+				sections[ b ].push( new Page( this.state.subjects[ i ], pics[ j ], words[ j ] ) );
 			}
 			pageCounts[ b ] = 5;
 		} );
