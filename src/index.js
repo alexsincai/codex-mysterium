@@ -23,17 +23,21 @@ class CodexMysterium extends React.Component {
 
 		this.state = {
 			subjects: [
-				'alchemy',
-				'flowers',
-				'trees',
-				'insects',
+				'birds',
 				'fish',
-				'bird',
-				'animals',
+				'insects',
+				'sea',
+				'flowers',
+				'plants',
 				'fossils',
-				'chemistry',
+				'astronomy',
 				'astrology',
-				'astronomy'
+				'chemistry',
+				'magic',
+				'alchemy',
+				'demonology',
+				'death',
+				'music',
 			],
 			sections: {},
 			sortedList: [],
@@ -217,7 +221,7 @@ class CodexMysterium extends React.Component {
 		let sections = {};
 		let pageCounts = {};
 
-		Object.keys( this.state.subjects ).forEach( ( _, i ) => {
+		this.state.subjects.forEach( ( _, i ) => {
 			const b = this.state.subjects[ i ];
 			const pics = images[ b ].sort( () => Math.random() > 0.5 );
 			sections[ b ] = [ new Page( this.state.subjects[ i ], pics[ i ], words[ i ], 'folio' ) ];
