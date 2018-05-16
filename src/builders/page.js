@@ -2,6 +2,7 @@ export default class Page {
 	constructor( subject, image, words, layoutName = null ) {
 		this.subject = subject;
 		this.image = image.src;
+		this.thumb = image.thumb;
 		this.layout = layoutName || image;
 		this.words = [].concat( words );
 	}

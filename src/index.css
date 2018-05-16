@@ -2,6 +2,7 @@
 @import "https://fontlibrary.org/face/runasans";
 #root,
 aside,
+aside dialog img,
 article,
 article div,
 article img {
@@ -13,6 +14,7 @@ article img {
   position: relative;
 }
 aside,
+aside dialog button,
 article div,
 article.index a::after,
 article.title a::after,
@@ -24,6 +26,7 @@ article.folio h1::after,
 article.landscape1 img {
   position: absolute;
 }
+aside dialog img,
 article .first::first-letter,
 article.portrait4 img {
   float: left;
@@ -109,12 +112,28 @@ article.title div {
 aside {
   top: 1em;
   right: 1em;
+  padding: 0.5em;
 }
 aside label {
   display: grid;
   grid-template-columns: 9fr 11fr;
   padding: 0.25em;
   grid-gap: 0.25em;
+}
+aside dialog {
+  position: fixed;
+  width: 80%;
+}
+aside dialog img {
+  display: block;
+  padding: 0.25em;
+}
+aside dialog img.active {
+  background: #a0522d;
+}
+aside dialog button {
+  top: 1em;
+  right: 1em;
 }
 article {
   width: 100vw;

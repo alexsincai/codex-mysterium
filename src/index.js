@@ -117,6 +117,20 @@ class CodexMysterium extends React.Component {
 				sortedList: this.state.sortedList.sort( () => Math.random() > 0.5 )
 			}, this.makePages );
 		}
+
+		if ( func === 'selectImage' ) {
+			const id = Number( e.target.dataset.id );
+			const page = Number( e.target.dataset.page );
+			const subject = e.target.dataset.subject;
+			const image = this.state.images[ subject ][ id ];
+
+			let s = this.state;
+			let current = s.pages.filter( p => p.subject === subject )[ page ];
+			current.image = image.src;
+			current.thumb = image.thumb;
+
+			this.setState( s );
+		}
 	}
 
 	componentWillMount() {
@@ -172,7 +186,7 @@ class CodexMysterium extends React.Component {
 				license: '7,9,10',
 				format: 'json',
 				nojsoncallback: 1,
-				extras: 'url_o,url_m',
+				extras: 'url_o,url_sq',
 				per_page: this.state.maxPagesPerSection,
 				page: page,
 				sort: 'relevance',
@@ -185,7 +199,8 @@ class CodexMysterium extends React.Component {
 				return {
 					width: Number( p.width_o ),
 					height: Number( p.height_o ),
-					src: p.url_o
+					src: p.url_o,
+					thumb: p.url_sq
 				};
 			} );
 		} ) ) ).then( () => {
@@ -281,6 +296,8 @@ class CodexMysterium extends React.Component {
           pageCounts={ this.state.pageCounts }
           indexPage={ this.state.indexPage }
           titlePage={ this.state.titlePage }
+          images={ this.state.images }
+          pages={ this.state.pages }
         />
       </React.Fragment>
 		);

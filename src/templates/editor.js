@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageSelector from './imageselector';
 
 const capitalize = ( string ) => string.substr( 0, 1 ).toUpperCase() + string.substr( 1 );
 
@@ -12,6 +13,8 @@ const Editor = ( {
 	pageCounts,
 	indexPage,
 	titlePage,
+	images,
+	pages
 } ) => {
 	return (
 		<aside>
@@ -55,6 +58,9 @@ const Editor = ( {
             <span>Section { ll + 1 } pages: { pageCounts[ l ] }</span>
             <input type="range" min="2" max="15" defaultValue={ pageCounts[ l ] } data-id={ l } data-func="pageCounts" onChange={ edit } />
           </label>
+          { pages.filter( p => p.subject === l ).map( ( p, pp ) => (
+            <ImageSelector key={ pp } id={ pp } subject={ l } current={ p.thumb } images={ images[ l ] } edit={ edit } capitalize={ capitalize } />
+          ) ) }
         </React.Fragment>
       ) ) }
     </aside>

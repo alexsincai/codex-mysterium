@@ -1,4 +1,4 @@
-// not actually used, made for dev
+// not actually used
 
 @import "https://fontlibrary.org/face/voynich"
 @import "https://fontlibrary.org/face/runasans"
@@ -87,12 +87,31 @@ aside
 	@extend $flex
 	for p in top right
 		{p} 1em
+	padding .5em
 
 	label
 		display grid
 		grid-template-columns 9fr 11fr
 		for p in padding grid-gap
 			{p} .25em
+
+	dialog
+		position fixed
+		width 80%
+
+		img
+			@extend $fl
+			@extend $bbox
+			display block
+			padding .25em
+
+			&.active
+				background sienna
+
+		button
+			@extend $posabs
+			top 1em
+			right 1em
 
 article
 	@extend $bbox
