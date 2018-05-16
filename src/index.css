@@ -1,257 +1,231 @@
 @import "https://fontlibrary.org/face/voynich";
 @import "https://fontlibrary.org/face/runasans";
-
-* {
-	box-sizing: border-box;
-}
-
-.voynich {
-	font-family: "Voynich123";
-}
-
-.rune {
-	font-family: "RunaSansMedium";
-}
-
-#root {
-	font-size: 1.2em;
-	line-height: 1.5;
-
-	position: relative;
-
-	overflow: hidden;
-}
-
-aside {
-	position: absolute;
-	top: 1em;
-	right: 1em;
-
-	display: flex;
-	flex-direction: column;
-
-	background: #fff;
-}
-
-aside label {
-	display: grid;
-
-	padding: .25em;
-
-	grid-template-columns: 9fr 11fr;
-	grid-gap: .25em;
-}
-
-article {
-	position: relative;
-
-	width: 100vw;
-	height: 70.7106781vh;
-
-	color: sienna;
-
-	page-break-inside: avoid;
-	page-break-after: always;
-}
-
-article > div {
-	position: absolute;
-	top: 5vw;
-	right: 5vw;
-	bottom: 5vw;
-	left: 5vw;
-
-	overflow: hidden;
-}
-
+#root,
+aside,
+article,
+article div,
 article img {
-	position: relative;
-
-	display: block;
-
-	width: 100%;
-	height: auto;
-	margin-right: auto;
-	margin-left: auto;
+  box-sizing: border-box;
 }
-
+#root,
+article,
+article img {
+  position: relative;
+}
+aside,
+article div,
+article.index a::after,
+article.title a::after,
+article.index ul,
+article.title ul,
+article.folio h1,
+article.folio h1::before,
+article.folio h1::after,
+article.landscape1 img {
+  position: absolute;
+}
+article .first::first-letter,
+article.portrait4 img {
+  float: left;
+}
+article.landscape2 img,
+article.portrait1 img,
+article.portrait3 img {
+  float: right;
+}
+#root,
+article div {
+  overflow: hidden;
+}
+aside,
+article.grey {
+  background-color: #fff !important;
+}
+article.index.grey,
+article.title.grey,
+article.index.grey a,
+article.title.grey a,
+article.title h1 {
+  color: #fff;
+}
+article img,
+article.index ul,
+article.title ul {
+  width: 100%;
+}
+article.index a::after,
+article.title a::after {
+  right: 0;
+}
+article.index ul,
+article.title ul,
+article.folio h1,
+article.landscape1 img {
+  bottom: 0;
+}
+article.folio h1::before,
+article.folio h1::after {
+  left: 0;
+}
+article.index a::after,
+article.title a::after,
+article.folio h1::before,
+article.folio h1::after {
+  content: attr(data-text);
+}
+article.landscape2 img,
+article.portrait4 img {
+  margin: 1em;
+}
+article.portrait4 img {
+  margin-left: 0;
+}
+article.landscape2 img,
+article.portrait1 img {
+  margin-right: 0;
+}
+article.portrait1 img,
+article.portrait2 img {
+  max-width: 102mm;
+  max-height: 102mm;
+  width: auto;
+}
+aside,
+article.title div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.voynich {
+  font-family: "Voynich123";
+}
+.rune {
+  font-family: "RunaSansMedium";
+}
+#root {
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+aside {
+  top: 1em;
+  right: 1em;
+}
+aside label {
+  display: grid;
+  grid-template-columns: 9fr 11fr;
+  padding: 0.25em;
+  grid-gap: 0.25em;
+}
+article {
+  width: 100vw;
+  height: 70.71vw;
+  color: #a0522d;
+  page-break-inside: avoid;
+  page-break-after: always;
+}
+article div {
+  top: 4.94vw;
+  right: 4.94vw;
+  bottom: 4.94vw;
+  left: 4.94vw;
+}
+article img {
+  display: block;
+  height: auto;
+  margin-right: auto;
+  margin-left: auto;
+}
 article h1 {
-	font-size: 8em;
+  font-size: 8em;
+  color: transparent;
 }
-
-article p.first::first-letter {
-	font-size: 2em;
-
-	float: left;
-
-	margin-right: .25em;
+article .first::first-letter {
+  font-size: 2em;
+  margin-right: 0.25em;
 }
-
-p ~ p {
-	margin-top: 1em;
+article p ~ p {
+  margin-top: 1em;
 }
-
-.grey {
-	color: #000 !important;
-	background-color: #fff !important;
-
-	filter: saturate(0) contrast(1.2);
+article.grey {
+  color: #000;
+  filter: saturate(0) contrast(1.2);
 }
-
-.grey h1 {
-	--color: #fff !important;
+article.grey h1 {
+  --color: #fff !important;
+  --back: #000 !important;
 }
-
-.grey[data-invert="true"] h1 {
-	--color: #000 !important;
+article.grey[data-invert="true"] h1 {
+  --color: #000 !important;
+  --back: #fff !important;
 }
-
-/* ***** */
+article.index,
+article.title {
+  background-color: #a0522d;
+}
+article.index a,
+article.title a {
+  text-decoration: none;
+}
+article.index,
+article.title,
+article.index a,
+article.title a {
+  color: #efe5d7;
+}
+article.index.grey,
+article.title.grey {
+  background-color: #333;
+}
+article.index li,
+article.title li {
+  border-bottom: 1.2px dashed;
+}
+article.title h1 {
+  text-align: center;
+}
+article.folio h1::before {
+  font-weight: bolder;
+  color: var(--back);
+}
+article.folio h1::after {
+  color: var(--color);
+}
+article.landscape1 img {
+  max-width: 100%;
+  max-height: 76.2mm;
+}
+article.landscape2 img {
+  max-width: 63.5mm;
+}
+article.portrait2 div {
+  column-count: 2;
+}
+article.portrait2 img {
+  margin-bottom: 0;
+}
+article.portrait3 div {
+  column-count: 3;
+}
+article.portrait4 img {
+  max-width: 100mm;
+  max-height: 110mm;
+}
 @media print {
-	@page {
-		margin: 0;
-
-		size: 297mm 210mm;
-	}
-
-	aside {
-		display: none;
-	}
-
-	article {
-		width: 297mm;
-		height: 209.5mm;
-	}
-
-	article > div {
-		top: 29.7mm;
-		right: 29.7mm;
-		bottom: 29.7mm;
-		left: 29.7mm;
-	}
-}
-/* ***** */
-
-.index {
-	color: #efe5d7;
-	background-color: sienna;
-}
-
-.index.grey {
-	color: #fff !important;
-	background-color: #333 !important;
-}
-
-.index a {
-	text-decoration: none;
-
-	color: #efe5d7;
-}
-
-.index.grey a {
-	color: #fff !important;
-}
-
-.index ul {
-	position: absolute;
-	bottom: 0;
-
-	width: 100%;
-}
-
-.index li {
-	border-bottom: 1.2px dashed;
-}
-
-.index a:after {
-	position: absolute;
-	right: 0;
-
-	content: attr(data-text);
-}
-
-.folio {
-	color: transparent;
-}
-
-.folio h1 {
-	position: absolute;
-	bottom: 0;
-}
-.folio h1:before,
-.folio h1:after {
-	position: absolute;
-	left: 0;
-
-	content: attr(data-text);
-}
-.folio h1:before {
-	font-weight: bolder;
-
-	color: var(--back);
-}
-.folio h1:after {
-	color: var(--color);
-}
-
-
-.landscape1 img {
-	position: absolute;
-	bottom: 0;
-
-	max-width: 100%;
-	max-height: 76.2mm;
-}
-
-.landscape2 div {
-	height: 123mm;
-}
-
-.landscape2 img {
-	float: right;
-
-	max-width: 63.5mm;
-	margin: 1em;
-	margin-right: 0;
-}
-
-.portrait1  img {
-	float: right;
-
-	max-width: 102mm;
-	max-height: 102mm;
-	margin-right: 0;
-}
-
-.portrait2 div {
-	column-count: 2;
-}
-
-.portrait2 p ~ p {
-	margin-top: 0;
-}
-
-.portrait2 img {
-	max-width: 102mm;
-	max-height: 102mm;
-	margin-bottom: 1em;
-}
-
-.portrait3 div {
-	column-count: 3;
-}
-
-.portrait3 img {
-	/* max-width: 51mm; */
-	/* max-height: 76mm; */
-	float: right;
-}
-
-.portrait4 img {
-	float: left;
-
-	max-width: 100mm;
-	max-height: 110mm;
-	margin: 1em;
-	margin-left: 0;
+  @page {
+    margin: 0;
+    size: 297mm 210mm;
+  }
+  aside {
+    display: none;
+  }
+  article {
+    width: 297mm;
+    height: 209.5mm;
+  }
+  article div {
+    top: 29.7mm;
+    right: 29.7mm;
+    bottom: 29.7mm;
+    left: 29.7mm;
+  }
 }

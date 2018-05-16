@@ -1,5 +1,5 @@
 export default class Page {
-	constructor( subject, image, layoutName = null, words ) {
+	constructor( subject, image, words, layoutName = null ) {
 		this.subject = subject;
 		this.image = image.src;
 		this.layout = layoutName || image;
@@ -13,7 +13,7 @@ export default class Page {
 		}
 
 		if ( ( im.width / 2 ) > im.height ) {
-			this._layout = 'landscape1'
+			this._layout = 'landscape1';
 		} else if ( im.width > im.height ) {
 			this._layout = 'landscape2';
 		} else {

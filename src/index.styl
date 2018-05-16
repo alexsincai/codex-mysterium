@@ -1,0 +1,271 @@
+// not actually used, made for dev
+
+@import "https://fontlibrary.org/face/voynich"
+@import "https://fontlibrary.org/face/runasans"
+
+$bbox
+	box-sizing border-box
+
+$posrel
+	position relative
+
+$posabs
+	position absolute
+
+$over
+	overflow hidden
+
+$fl
+	float left
+
+$fr
+	float right
+
+$oh
+	overflow hidden
+
+$bgwhite
+	background-color white !important
+
+$colorwhite
+	color white
+
+$width100
+	width 100%
+
+$t0
+	top 0
+
+$r0
+	right 0
+
+$b0
+	bottom 0
+
+$l0
+	left 0
+
+$datatext
+	content attr(data-text)
+
+$m1
+	margin 1em
+
+$ml0
+	margin-left 0
+
+$mr0
+	margin-right 0
+
+$mwmh
+	for p in width height
+		max-{p} 102mm
+	width auto
+
+$flex
+	display flex
+	flex-direction column
+	justify-content center
+
+.voynich
+	font-family "Voynich123"
+
+.rune
+	font-family "RunaSansMedium"
+
+#root
+	@extend $bbox
+	@extend $posrel
+	@extend $oh
+	font-size 1.2em
+	line-height 1.5
+
+aside
+	@extend $bbox
+	@extend $posabs
+	@extend $bgwhite
+	@extend $flex
+	for p in top right
+		{p} 1em
+
+	label
+		display grid
+		grid-template-columns 9fr 11fr
+		for p in padding grid-gap
+			{p} .25em
+
+article
+	@extend $bbox
+	@extend $posrel
+	width 100vw
+	height 70.71vw
+	color sienna
+	page-break-inside avoid
+	page-break-after always
+
+	div
+		@extend $bbox
+		@extend $posabs
+		@extend $oh
+		for p in top right bottom left
+			{p} 4.94vw
+
+	img
+		@extend $bbox
+		@extend $posrel
+		@extend $width100
+		display block
+		height auto
+		for m in right left
+			margin-{m} auto
+
+	h1
+		font-size 8em
+		color transparent
+
+	.first::first-letter
+		@extend $fl
+		font-size 2em
+		margin-right .25em
+
+	p ~ p
+		margin-top 1em
+
+	&.grey
+		@extend $bgwhite
+		color black
+		filter saturate(0) contrast(1.2)
+
+		h1
+			--color white !important
+			--back black !important
+
+			^[1][data-invert="true"] ^[2..2]
+				--color black !important
+				--back white !important
+
+	&.index
+	&.title
+		background-color sienna
+
+		a
+			text-decoration none
+
+			&::after
+				@extends $posabs
+				@extend $r0
+				@extend $datatext
+
+			../
+			&
+				color #efe5d7
+
+		&.grey
+			@extend $colorwhite
+			background-color #333
+
+			a
+				@extend $colorwhite
+
+		ul
+			@extend $posabs
+			@extend $width100
+			@extend $b0
+
+		li
+			border-bottom 1.2px dashed
+
+	&.title
+		div
+			@extend $flex
+
+		h1
+			@extend $colorwhite
+			text-align center
+
+	&.folio
+
+		h1
+			@extend $posabs
+			@extend $b0
+
+			&::before
+			&::after
+				@extend $posabs
+				@extend $l0
+				@extend $datatext
+
+			&::before
+				font-weight bolder
+				color var(--back)
+
+			&::after
+				color var(--color)
+
+	&.landscape1
+
+		img
+			@extend $posabs
+			@extend $b0
+			max-width 100%
+			max-height 76.2mm
+
+	&.landscape2
+
+		//div
+		//	height 133mm
+
+		img
+			@extend $fr
+			@extend $m1
+			@extend $mr0
+			max-width 63.5mm
+
+	&.portrait1
+
+		img
+			@extend $fr
+			@extend $mr0
+			@extend $mwmh
+
+	&.portrait2
+
+		div
+			column-count 2
+
+		img
+			@extend $mwmh
+			margin-bottom 0
+
+	&.portrait3
+
+		div
+			column-count 3
+
+		img
+			@extend $fr
+
+	&.portrait4
+
+		img
+			@extend $fl
+			@extend $m1
+			@extend $ml0
+			max-width 100mm
+			max-height 110mm
+
+@media print
+  	@page
+  		margin 0
+  		size 297mm 210mm
+
+  	aside
+  		display none
+
+  	article
+  		width 297mm
+  		height 209.5mm
+
+  		div
+  			for p in top right bottom left
+  				{p} 29.7mm

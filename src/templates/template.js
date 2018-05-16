@@ -1,11 +1,9 @@
 import React from 'react';
 import * as getColors from 'get-image-colors';
 
-export default class Tempalte extends React.Component {
+export default class Template extends React.Component {
 	constructor( props ) {
 		super( props );
-
-		this.getColor = this.getColor.bind( this );
 
 		this.state = {
 			id: props.id,
@@ -13,7 +11,9 @@ export default class Tempalte extends React.Component {
 			layout: props.layout,
 			image: props.image,
 			words: props.words,
-		}
+		};
+
+		this.getColor = this.getColor.bind( this );
 	}
 
 	getColor() {
@@ -24,6 +24,7 @@ export default class Tempalte extends React.Component {
 			} );
 			return;
 		}
+
 		getColors( this.state.image ).then( colors => {
 			const back = colors.sort( ( a, b ) => a.luminance() > b.luminance() ).pop();
 			const text = colors.sort( ( a, b ) => a.luminance() < b.luminance() ).pop();
@@ -33,7 +34,7 @@ export default class Tempalte extends React.Component {
 				mustSet: back.luminance() > 0.75,
 				mustInvert: back.luminance() < 0.5
 			} );
-		} )
+		} );
 	}
 
 	componentWillUpdate( nextProps, nextState ) {
@@ -67,8 +68,19 @@ export default class Tempalte extends React.Component {
 		if ( this.state.mustInvert ) {
 			articleProps.style.color = this.state.text;
 		}
+
 		if ( this.state.mustSet ) {
 			articleProps[ 'data-invert' ] = 'true';
+		}
+
+		if ( layout === 'title' ) {
+			return (
+				<article { ...articleProps }>
+          <div>
+            <h1>{ words.join( ' ' ) }</h1>
+          </div>
+        </article>
+			);
 		}
 
 		if ( layout === 'index' ) {
@@ -84,7 +96,7 @@ export default class Tempalte extends React.Component {
             </ul>
           </div>
         </article>
-			)
+			);
 		}
 
 		if ( layout === 'folio' ) {
@@ -98,7 +110,7 @@ export default class Tempalte extends React.Component {
 					'--color': this.state.mustSet ? this.state.text : this.state.back,
 					'--back': this.state.mustSet ? this.state.back : this.state.text,
 				}
-			}
+			};
 
 			return (
 				<article { ...articleProps }>
@@ -106,18 +118,18 @@ export default class Tempalte extends React.Component {
             <h1 { ...hprops }>{ words[ 0 ] }</h1>
           </div>
         </article>
-			)
+			);
 		}
 
 		if ( layout === 'landscape1' ) {
 			return (
 				<article { ...articleProps }>
           <div>
-            <p className="first">{ words.slice( 0, 110 ).join( ' ' ) }</p>
-            <img src={ image } alt=""/>
+            <p className="first">{ words.slice( 0, 80 ).join( ' ' ) }</p>
+            <img src={ image } alt="" />
           </div>
         </article>
-			)
+			);
 		}
 
 		if ( layout === 'landscape2' ) {
@@ -126,10 +138,10 @@ export default class Tempalte extends React.Component {
           <div>
             <p className="first">{ words.slice( 0, 30 ).join( ' ' ) }</p>
             <img src={ image } alt="" />
-            <p>{ words.slice( 30 ).join( ' ' )}</p>
+            <p>{ words.slice( 30 ).join( ' ' ) }</p>
           </div>
         </article>
-			)
+			);
 		}
 
 		if ( layout === 'portrait1' ) {
@@ -138,61 +150,47 @@ export default class Tempalte extends React.Component {
           <div>
             <img src={ image } alt="" />
             <p className="first">{ words.slice( 0, 70 ).join( ' ' ) }</p>
-            <p>{ words.slice( 70 ).join( ' ' )}</p>
+            <p>{ words.slice( 70 ).join( ' ' ) }</p>
           </div>
         </article>
-			)
+			);
 		}
 
 		if ( layout === 'portrait2' ) {
 			return (
 				<article { ...articleProps }>
           <div>
-            <p className="first">{ words.slice( 0, 40 ).join( ' ' )}</p>
-            <img src={ image } alt=""/>
+            <p className="first">{ words.slice( 0, 40 ).join( ' ' ) }</p>
+            <img src={ image } alt="" />
             <p className="first">{ words.slice( 40 ).join( ' ' ) }</p>
           </div>
         </article>
-			)
+			);
 		}
 
 		if ( layout === 'portrait3' ) {
 			return (
 				<article { ...articleProps }>
           <div>
-            <p className="first">{ words.slice( 0, 50 ).join( ' ' )}</p>
-            <img src={ image } alt=""/>
+            <p className="first">{ words.slice( 0, 50 ).join( ' ' ) }</p>
+            <img src={ image } alt="" />
             <p className="first">{ words.slice( 50  ).join( ' ' ) }</p>
           </div>
         </article>
-			)
+			);
 		}
 
 		if ( layout === 'portrait4' ) {
 			return (
 				<article { ...articleProps }>
           <div>
-            <img src={ image } alt=""/>
-            <p className="first">{ words.slice( 0, 70 ).join( ' ' )}</p>
-            <p className="">{ words.slice( 70, 50 ).join( ' ' ) }</p>
+            <img src={ image } alt="" />
+            <p className="first">{ words.slice( 0, 70 ).join( ' ' ) }</p>
+            <p>{ words.slice( 70, 50 ).join( ' ' ) }</p>
             <p className="first">{ words.slice( 120  ).join( ' ' ) }</p>
           </div>
         </article>
-			)
+			);
 		}
-
-		return null;
-		// return (
-		// 	<article id={ this.props.id } className={ cls } style={{
-		//     backgroundColor: this.state.back,
-		//     color: this.state.text
-		//   }}>
-		//     { ( this.props.layout === 'folio' ) && (
-		//       h1
-		//     ) }
-		//     {/* <img src={ this.props.image } alt=""/> */}
-		//     {/* <p>{ this.props.words.join( ' ' ) }</p> */}
-		//   </article>
-		// )
 	}
 }
