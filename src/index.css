@@ -195,6 +195,14 @@ article.index.grey,
 article.title.grey {
   background-color: #333;
 }
+article.index.grey h1,
+article.title.grey h1,
+article.index.grey ul,
+article.title.grey ul,
+article.index.grey a,
+article.title.grey a {
+  color: #000;
+}
 article.index li,
 article.title li {
   border-bottom: 1.2px dashed;
