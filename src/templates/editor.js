@@ -38,16 +38,16 @@ const Editor = ( {
         <input type="checkbox" data-func="indexPage" checked={ indexPage } onChange={ edit } />
       </label>
       <label>
-        <button data-func="randomize" onClick={ edit }>Randomize sections</button>
+        <button data-func="randomize" onClick={ edit }>Randomize chapters</button>
       </label>
       <label>
-        <span>Sections: { maxSections }</span>
+        <span>Chapter count: { maxSections }</span>
         <input type="range" min="1" max={ subjects.length } data-func="maxSections" defaultValue={ maxSections } onChange={ edit } />
       </label>
       { sortedList.slice( 0, maxSections ).map( ( l, ll ) => (
         <React.Fragment key={ ll }>
           <label>
-            <span>Section { ll + 1 } subject: </span>
+            <span>Chapter { ll + 1 } subject: </span>
             <select value={ l } data-id={ ll } data-func="setSection" onChange={ edit }>
               { subjects.map( ( s, ss ) => (
                 <option key={ ss } value={ s }>{ capitalize( s ) }</option>
@@ -55,7 +55,7 @@ const Editor = ( {
             </select>
           </label>
           <label>
-            <span>Section { ll + 1 } pages: { pageCounts[ l ] }</span>
+            <span>Chapter { ll + 1 } pages: { pageCounts[ l ] }</span>
             <input type="range" min="2" max="15" defaultValue={ pageCounts[ l ] } data-id={ l } data-func="pageCounts" onChange={ edit } />
           </label>
           { pages.filter( p => p.subject === l ).map( ( p, pp ) => (

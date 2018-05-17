@@ -135,6 +135,9 @@ aside dialog button {
   top: 1em;
   right: 1em;
 }
+aside dialog button + button {
+  right: 3.5em;
+}
 article {
   width: 100vw;
   height: 70.71vw;

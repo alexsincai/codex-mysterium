@@ -36,7 +36,8 @@ export default class ImageSelector extends React.Component {
         </button>
         <dialog open={ this.state.open }>
           <button onClick={ this.dialog }>&times;</button>
-          { this.state.images && this.state.images.map( ( i, ii ) => (
+          <button data-func="loadMoreImages" data-subject={ this.state.subject } onClick={ this.state.edit }>Load different images</button>
+            { this.state.images && this.state.images.map( ( i, ii ) => (
             <img
               key={ ii }
               data-id={ ii }

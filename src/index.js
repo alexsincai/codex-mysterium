@@ -42,6 +42,7 @@ class CodexMysterium extends React.Component {
 			sections: {},
 			sortedList: [],
 			pageCounts: {},
+			pageOffsets: {},
 			images: {},
 			pages: [],
 			maxSections: 3,
@@ -135,6 +136,17 @@ class CodexMysterium extends React.Component {
 
 			this.setState( s );
 		}
+
+		if ( func === "loadMoreImages" ) {
+			const subject = e.target.dataset.subject;
+			const pageOffsets = this.state.pageOffsets;
+			pageOffsets[ subject ] = pageOffsets[ subject ] + 1;
+			this.setState( {
+				pageOffsets
+			}, () => {
+				this.loadImagesFromFlickr( subject, pageOffsets[ subject ] );
+			} )
+		}
 	}
 
 	componentWillMount() {
@@ -177,7 +189,7 @@ class CodexMysterium extends React.Component {
 
 	loadImagesFromFlickr( subject = null, page = 1 ) {
 		let subjects = subject ? [ subject ] : this.state.subjects;
-		let images = {};
+		let images = this.state.images;
 		let searchUrls = [];
 
 		for ( let s in subjects ) {
@@ -201,6 +213,7 @@ class CodexMysterium extends React.Component {
 		axios.all( searchUrls.map( u => axios.get( u ) ) ).then( axios.spread( ( ...z ) => z.forEach( ( r, i ) => {
 			images[ subjects[ i ] ] = r.data.photos.photo.map( p => {
 				return {
+					title: p.title,
 					width: Number( p.width_o ),
 					height: Number( p.height_o ),
 					src: p.url_o,
@@ -220,6 +233,7 @@ class CodexMysterium extends React.Component {
 		let words = this.state.words;
 		let sections = {};
 		let pageCounts = {};
+		let pageOffsets = this.state.pageOffsets;
 
 		this.state.subjects.forEach( ( _, i ) => {
 			const b = this.state.subjects[ i ];
@@ -229,11 +243,13 @@ class CodexMysterium extends React.Component {
 				sections[ b ].push( new Page( this.state.subjects[ i ], pics[ j ], words[ j ] ) );
 			}
 			pageCounts[ b ] = 5;
+			pageOffsets[ b ] = pageOffsets[ b ] || 1;
 		} );
 
 		this.setState( {
 			sections,
-			pageCounts
+			pageCounts,
+			pageOffsets
 		}, this.makePages );
 	}
 
