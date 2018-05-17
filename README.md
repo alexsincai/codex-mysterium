@@ -13,7 +13,7 @@ This just-for-fun project is a ReactJS implementation of [Liza Daly's *Seraphs*]
 * Type `npm install`
 * When the installation is done, type `npm run start`
 
-This will open a new browser window. Here, you can make the following changes to your codex:
+This will open a new browser window. If not, open a browser and navigate to [**http://localhost:3000/**](http://localhost:3000/). Here, you can make the following changes to your codex:
 
 * Script: Voynich-like or runes
 * Force greyscale: If you want a black-and-white document rather than a color one
