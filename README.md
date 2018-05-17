@@ -4,9 +4,12 @@ This just-for-fun project is a ReactJS implementation of [Liza Daly's *Seraphs*]
 
 ## Usage
 
+* Get a [Flickr API key](https://www.flickr.com/services/apps/create/apply/?) (Non-commercial)
 * Install [nodejs](https://nodejs.org/en/) if you don't have it
 * Download this project somewhere
 * Open a console window, navigate to where you've downloaded the project
+* Locate the file `/src/_secret.js`, replae in it the string `'YOUR FLICKR API KEY HERE'` with your API key (make sure to keep the quotation marks)
+* Rename this file to `secret.js` (removing the leading underscore)
 * Type `npm install`
 * When the installation is done, type `npm run start`
 
@@ -29,8 +32,10 @@ When printing, please make sure to have background graphics **enabled** (for the
 ## Sample results
 
 * [Color version, Voynich-like script](/public/codex-mysterium-color-voynich.pdf) (PDF, 23.6 MB)
-* [Black-andWhite version, Runic script](/public/codex-mysterium-bw-runes.pdf) (PDF, 3.6MB)
+* [Black-and-White version, Runic script](/public/codex-mysterium-bw-runes.pdf) (PDF, 3.6MB)
 
 * * *
 
-This project has been tested in [Chrome 66](https://www.google.com/chrome/) and [FireFox 60](https://www.mozilla.org/en-US/firefox/) under Windows 10. It should work in any modern browser.
+This project has been built using [create-react-app](https://github.com/facebook/create-react-app), leveraging images from [Flickr](https://www.flickr.com/) and fonts from [Font Libary](https://fontlibrary.org/)
+
+It was tested in [Chrome 66](https://www.google.com/chrome/) and [FireFox 60](https://www.mozilla.org/en-US/firefox/) under Windows 10. It should work in any modern browser.
