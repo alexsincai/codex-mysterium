@@ -4,7 +4,7 @@
   "description": "JS sort-of port of Liza Daly's Seraphs",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "get-image-colors": "^1.8.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
